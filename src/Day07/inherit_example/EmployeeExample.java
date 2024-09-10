@@ -12,6 +12,5 @@ public class EmployeeExample {
         Employee em = new FullTimeEmployee("lee",20);  // 자식 클래스의 업캐스팅으로  추상 클래스 객체생성(??)
         System.out.println(em.name);
         System.out.println(em.calculateSalary());
-
     }
 }
