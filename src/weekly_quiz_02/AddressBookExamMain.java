@@ -31,7 +31,7 @@ public class AddressBookExamMain {
                     phoneNum = sc.next();
                     System.out.print("회사명을 입력하세요 :");
                     company = sc.next();
-                    addr.contacts.add(new BusinessContact(name,phoneNum,company));
+                    addr.addAddress(new BusinessContact(name,phoneNum,company));
                     break;
                 case "2":
                     System.out.print("이름을 입력하세요 : ");
@@ -40,7 +40,7 @@ public class AddressBookExamMain {
                     phoneNum = sc.next();
                     System.out.print("관계를 입력하세요 :");
                     relation = sc.next();
-                    addr.contacts.add(new PersonalContact(name,phoneNum,relation));
+                    addr.addAddress(new PersonalContact(name,phoneNum,relation));
                     break;
                 case "3":
                     addr.displayContacts();

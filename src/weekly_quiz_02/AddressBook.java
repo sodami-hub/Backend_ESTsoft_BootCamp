@@ -3,10 +3,14 @@ package weekly_quiz_02;
 import java.util.ArrayList;
 
 public class AddressBook {
-    ArrayList<Contact> contacts;
+    private ArrayList<Contact> contacts;
 
     public AddressBook() {
         contacts = new ArrayList<>();
+    }
+
+    public void addAddress(Contact newAddr) {
+        contacts.add(newAddr);
     }
 
     public void displayContacts() {
