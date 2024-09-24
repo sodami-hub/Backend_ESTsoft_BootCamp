@@ -1,45 +1,37 @@
 package weekly_quiz_01;
 
+import java.math.BigDecimal;
+
 public class Cart{
     Product[] products;
+    int totalWeight;
+    int totalPrice;
+    int discount;
 
     public Cart(Product[] products){
         this.products=products;
+        for (Product product : products) {
+            this.totalWeight += product.weight;
+            this.totalPrice += product.price;
+            this.discount += product.getDiscountAmount();
+            this.totalPrice -= this.discount;
+        }
     }
 
     public int calculateDeliveryCharge() {
-        int totalWeight =0;
-        int totalMoney = 0;
-        int discount = 0;
-        int result = 0;
 
-        for (Product product : products) {
-            totalWeight += product.weight;
-            totalMoney += product.price;
-            discount += product.getDiscountAmount();
+        int deliveryCharge;
+
+        // 무게에 따른 배송비 반환
+        deliveryCharge = Policy.chargeForWeight(totalWeight);
+
+        // 할인이 적용된 가격에 따른 배송비용 추가 계산
+        if(Policy.PRICE_DISCOUNT_FIRST_STEP <= this.totalPrice && Policy.PRICE_DISCOUNT_SECOND_STEP> this.totalPrice){
+            deliveryCharge-= Policy.FIRST_STEP_CHARGE;
+        } else if(this.totalPrice >= Policy.PRICE_DISCOUNT_SECOND_STEP) {
+            deliveryCharge = Policy.DELIVERY_FEE_FREE;
         }
 
-        if(totalWeight < 3){
-            result = 1000;
-        }else if(totalWeight<10) {
-            result = 5000;
-        }else {
-            result = 10000;
-        }
-
-        System.out.println("배송비용 : " + result);
-        System.out.println("전체 금액 : "+totalMoney);
-        System.out.println("할인 금액 : "+discount);
-
-        totalMoney -= discount;
-
-
-        if(30000 <= totalMoney && 100000>totalMoney){
-            result-=1000;
-        } else if(totalMoney >= 100000) {
-            result = 0;
-        }
-
-        return result;
+        return deliveryCharge;
     }
 }
