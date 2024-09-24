@@ -1,4 +1,4 @@
-package chapter12.dailyquiz0924;
+package chapter12.dailyquiz0923;
 
 /*
 1. 4 - @FunctionalInterface를 붙이는 것은 선택사항이지만, 컴파일 과정에서

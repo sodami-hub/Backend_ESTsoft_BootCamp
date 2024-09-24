@@ -1,4 +1,6 @@
-package chapter12.dailyquiz0924;
+package chapter12.dailyquiz0923;
+
+import java.util.function.Function;
 
 public class Quiz06 {
     private static Student[] students = {
@@ -7,18 +9,18 @@ public class Quiz06 {
     };
 
 
-    public static double avg(FunctionalInterfaceForQuiz06<Student> function) {
+    public static double avg(Function<Student, Integer> function) {
         int sum = 0;
         double result =0;
         for (Student student : students) {
-            result += function.Func(student);
+            result += function.apply(student);
         }
-        return result/(students.length);
+        return result/(double)(students.length);
     }
 
 
     public static void main(String[] args) {
-        double englishAvg = avg( s -> s.getEnglishScore() );
+        double englishAvg = avg( s -> s.getEnglishScore());
         System.out.println("영어 평균 점수: " + englishAvg);
 
         double mathAvg = avg( s -> s.getMathScore() );
