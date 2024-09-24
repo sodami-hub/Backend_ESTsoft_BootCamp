@@ -1,21 +1,23 @@
 package weekly_quiz_01;
 
+import java.math.BigDecimal;
+
 public class Policy {
 
-    final static int FIRST_DISCOUNT_STEP = 3;
-    final static int FIRST_STEP_CHARGE = 1000;
-    final static int SECOND_DISCOUNT_STEP = 10;
-    final static int SECOND_STEP_CHARGE = 5000;
-    final static int LAST_STEP_CHARGE = 10000;
-    final static int DELIVERY_FEE_FREE= 0;
-    final static int PRICE_DISCOUNT_FIRST_STEP = 30000;
-    final static int PRICE_DISCOUNT_SECOND_STEP = 100000;
+    final static BigDecimal FIRST_DISCOUNT_STEP = BigDecimal.valueOf(3);
+    final static BigDecimal FIRST_STEP_CHARGE = BigDecimal.valueOf(1_000);
+    final static BigDecimal SECOND_DISCOUNT_STEP = BigDecimal.valueOf(10);
+    final static BigDecimal SECOND_STEP_CHARGE = BigDecimal.valueOf(5_000);
+    final static BigDecimal LAST_STEP_CHARGE = BigDecimal.valueOf(10_000);
+    final static BigDecimal DELIVERY_FEE_FREE= BigDecimal.valueOf(0);
+    final static BigDecimal PRICE_DISCOUNT_FIRST_STEP = BigDecimal.valueOf(30_000);
+    final static BigDecimal PRICE_DISCOUNT_SECOND_STEP =BigDecimal.valueOf(100_000);
 
-    public static int chargeForWeight(int totalWeight) {
-        int Charge;
-        if(totalWeight < FIRST_DISCOUNT_STEP){
+    public static BigDecimal chargeForWeight(BigDecimal totalWeight) {
+        BigDecimal Charge;
+        if(totalWeight.compareTo(FIRST_DISCOUNT_STEP) < 0 ){
             Charge = FIRST_STEP_CHARGE;
-        }else if(totalWeight< SECOND_DISCOUNT_STEP) {
+        }else if(totalWeight.compareTo(SECOND_DISCOUNT_STEP)  < 0) {
             Charge = SECOND_STEP_CHARGE;
         }else {
             Charge = LAST_STEP_CHARGE;
