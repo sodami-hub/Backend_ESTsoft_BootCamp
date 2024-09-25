@@ -11,9 +11,10 @@ public class OptionalExample02 {
 
         OptionalDouble od = list.stream()
                 .mapToInt(Integer::intValue)
-                .average();                  // 여기까지 OptionalDouble 객체로 변경된 값. 예외가 발생하지 않음.
+                .average();
+        // 여기까지 OptionalDouble 객체로 변경된 값. 예외가 발생하지 않음.
 
-        double avg = od.orElse(0.0);  // orElse() 를 사용함으로 예외발생을 원천 차단함.
+        double avg = od.orElse(0.0);  // orElse() 를 사용함으로 OptionalDouble 객체에서 예외발생을 원천 차단함.
 
         System.out.println("avg = " + avg);
 

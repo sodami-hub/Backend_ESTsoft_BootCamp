@@ -12,9 +12,9 @@ public class OptionalExample {
 
         // Optional 객체 생성 (empty(), of(), ofNullable())
 
-        Optional<Integer> empty = Optional.empty();
-        OptionalInt empty2 = OptionalInt.empty();
-        OptionalDouble empty3 = OptionalDouble.empty();
+        Optional<Integer> empty = Optional.empty();  // 빈객체 생성
+        OptionalInt empty2 = OptionalInt.empty();   // 빈객체 생성
+        OptionalDouble empty3 = OptionalDouble.empty();  // 빈객체 생성
 
         Optional<Integer> optional02 = Optional.of(354); // op() 는 value에 null을 넣으면 NPE 발생.. 잘 사용 안함
 
@@ -29,7 +29,7 @@ public class OptionalExample {
         Integer i = optional02.orElseThrow(NoSuchElementException::new);
         System.out.println(i);
 
-        // isPresent()
+        // isPresent()  - 저장된 값이 있는지를 체크하는 메소드.
 
         if(optional03.isPresent()) {
             Integer integer = optional03.get();
