@@ -25,20 +25,10 @@ public class Quiz02 {
     public int[] solutionStream(int[] array1, int[] array2) {
         int[] result = new int[array1.length+array2.length];
 
-        Integer[] arr01 = Arrays.stream(array1)
-                .boxed()
-                .toArray(Integer[]::new);
-
-        Integer[] arr02 = Arrays.stream(array2)
-                .boxed()
-                .toArray(Integer[]::new);
-
-        result = Stream.of(arr01,arr02)
-                .flatMap(x->Arrays.stream(x))
-                .mapToInt(Integer::intValue)
+        result = Stream.of(array1,array2)
+                .flatMapToInt(x->Arrays.stream(x))
                 .sorted()
                 .toArray();
-
 
         return result;
     }
