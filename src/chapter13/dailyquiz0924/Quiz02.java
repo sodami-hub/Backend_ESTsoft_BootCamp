@@ -1,14 +1,16 @@
 package chapter13.dailyquiz0924;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Quiz02 {
-    public int[] solution(int[] array1, int[] array2) {
+    public int[] solutionNoStream(int[] array1, int[] array2) {
         int[] result = new int[array1.length + array2.length];
 
 
-        // 코드 작성
+        // 스트림 없는 코드 작성
         for(int i = 0; i< array1.length; i++) {
             result[i] = array1[i];
         }
@@ -16,6 +18,27 @@ public class Quiz02 {
             result[i] = array2[i-array1.length];
         }
         Arrays.sort(result);
+
+        return result;
+    }
+
+    public int[] solutionStream(int[] array1, int[] array2) {
+        int[] result = new int[array1.length+array2.length];
+
+        Integer[] arr01 = Arrays.stream(array1)
+                .boxed()
+                .toArray(Integer[]::new);
+
+        Integer[] arr02 = Arrays.stream(array2)
+                .boxed()
+                .toArray(Integer[]::new);
+
+        result = Stream.of(arr01,arr02)
+                .flatMap(x->Arrays.stream(x))
+                .mapToInt(Integer::intValue)
+                .sorted()
+                .toArray();
+
 
         return result;
     }
@@ -38,7 +61,14 @@ public class Quiz02 {
             array2[i] = scanner.nextInt();
         }
 
-        for (int x : ascendingSort.solution(array, array2)) {
+        System.out.println("일반 메소드 사용 >");
+        for (int x : ascendingSort.solutionNoStream(array, array2)) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+
+        System.out.println("스트림 사용 >");
+        for (int x : ascendingSort.solutionStream(array, array2)) {
             System.out.print(x + " ");
         }
     }
