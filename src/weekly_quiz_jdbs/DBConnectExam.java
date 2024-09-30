@@ -22,6 +22,7 @@ public class DBConnectExam {
         //학생 테이블에 있는 전체 학생들 중, 30대 학생들만 출력하기 (name, age, addres)
         String sql = "select name,age,address from students where age between 20 and 39";
         try {
+            assert dbConn != null;
             Statement st = dbConn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             System.out.println("name  age address");
