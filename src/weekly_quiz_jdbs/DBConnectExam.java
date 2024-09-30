@@ -1,23 +1,18 @@
-package weekly_quiz_dbms;
+package weekly_quiz_jdbs;
 
 import java.sql.*;
 
 public class DBConnectExam {
     public static void main(String[] args) {
         String dbDriver = "com.mysql.jdbc.Driver";
-
         String dbUrl = "jdbc:mysql://127.0.0.1:3306/test_db";
-
         String user = "root";
         String pw = "admin";
 
         Connection dbConn = null;
-        Connection conn = null;
         try {
             Class.forName(dbDriver);
-            conn = DriverManager.getConnection(dbUrl,user,pw);
-            dbConn=conn;
-
+            dbConn = DriverManager.getConnection(dbUrl,user,pw);
             System.out.println("연결 성공");
         }catch(SQLException | ClassNotFoundException e) {
             System.out.println("연결 실패");
@@ -38,9 +33,9 @@ public class DBConnectExam {
             rs.close();
             st.close();
         } catch(SQLException e) {
-            e.printStackTrace();
+            System.out.println("SQLException");
         } catch(Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception");
         }
     }
 }
