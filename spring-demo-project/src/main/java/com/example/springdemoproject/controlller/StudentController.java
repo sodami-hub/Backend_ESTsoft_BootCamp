@@ -3,10 +3,12 @@ package com.example.springdemoproject.controlller;
 import com.example.springdemoproject.repository.Student;
 import com.example.springdemoproject.repository.StudentJdbcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class StudentController {
 
 
     @GetMapping("/student/all")
-    public List<Student> getStudentAll() {
+    public Student getStudentAll() throws SQLException {
         return studentJdbcRepository.selectAllStudent();
     }
 
