@@ -1,0 +1,11 @@
+### GET student
+GET http://localhost:8080/student/name/list
+Content-Type: application/json
+
+### GET student by name
+GET http://localhost:8080/student/name?name=김철수
+Content-Type: application/json
+
+### GET instructor
+GET http://localhost:8080/instructor/name/list
+Content-Type: application/json
