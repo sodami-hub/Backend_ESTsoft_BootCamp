@@ -1,17 +1,16 @@
-package com.example.springdemoproject.repository;
+package com.example.springjdbcproject.model;
 
-import com.example.springdemoproject.ioc_example.Inter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.Date;
 
-//ROW MAPPER ==> select * from student 결과의 한 행이 row
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Student {
     private Long id;
     private String name;
