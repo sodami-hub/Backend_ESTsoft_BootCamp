@@ -1,0 +1,78 @@
+DROP TABLE  if exists wallet;
+CREATE TABLE `wallet` (
+    `id` bigint(11) NOT NULL AUTO_INCREMENT,
+    -- `uuid` varchar(255) NOT NULL UNIQUE 'as identifier',
+    `user_id` varchar(255) NOT NULL,
+    `type` varchar(255) NOT NULL,
+    -- json 또는 text 가능
+    `metadata` json,
+    `created_at` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
+    -- database locking // autoincrement
+    `version` int DEFAULT 1,
+    `updated_at` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
+    PRIMARY KEY (`id`),
+    UNIQUE (`user_id`, `type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 전자 지갑 = wallet => 유형(type)
+-- 일반유저용. 개인사업자들용. 시스템용지갑
+-- '오르미 핀테크지갑' -> 일반유저에 있는 지갑의 특정계좌에서 돈을 개인자영업자들용 지갑의 특정 계좌로 이체한다.
+-- version
+    --databse lock -> 신한은행계좌로 2명이 동시에 송금을 할때. (최종 잔고 balance) 100,
+    -- <- 김씨가 200원을 송금하면 currentBalance + 200 == 300 (update전이라면) -
+    --<- 이씨가 200원을 송금하면 currentBalance + 200 = 500 (currentBalance + 200 == 300)
+    -- 나의 최종잔고는 300원이 될수 있다. lock == transaction
+    -- locking pessimistic(비관적), optimistic(낙관적) locking
+    -- pessimistic // select 해서 데이타에 접근하는 순간 lock
+    -- optimistic // update 전에 lock
+
+    -- optimistic locking의 예
+        --select 100, version from 지갑;
+        -- 김씨 (100원, 1) -> 200원을 추가 update -> begin transaction update 100 + 200, version++ end commit // (300, 2)
+        -- 이씨 (100원, 1) -> 200원을 추가 update -> begin transaction update 100 + 200 where version=1 반영된 정보가 0개.
+        -- hibernate가 이씨가 요청한 처리에 대해서는 이미 다른 요청에 의해서 당신이 처리하려했던거는 invalid한 작업이되었다. optimistic locking exception throws
+        -- => 이씨에 대한 송금요청처리를 다시 한다. // 재처리에대한 비용이 발생한다.
+    -- pessimistic locking의 예
+        -- 비관적 기법은 앞선 트랜잭션이 끝날때까지 대기해야 한다. 시간지연에 대한 비용이 발생한다.
+
+
+DROP TABLE  if exists account;
+CREATE TABLE `account` (
+    `id` bigint(11) NOT NULL AUTO_INCREMENT,
+    `visible` boolean DEFAULT FALSE,
+    `amounts` bigint(11) NOT NULL default 0 COMMENT 'amount of balance for this account',
+    `currency` varchar(255) NOT NULL DEFAULT 'WON' COMMENT 'could be JPY, POINT/USD..',
+    `type` varchar(255) NOT NULL,
+    `metadata` json,
+    `wallet_id` bigint(11) NOT NULL,
+    `created_at` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
+    `version` int DEFAULT 1,
+    `updated_at` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- wallet에는 여러개의 account 생성 가능, account는 장부(거래정보)
+-- 돈의 종류가 여러가지 일 수 있다.(cashback, prepaid, emoney)
+
+DROP TABLE  if exists transaction;
+CREATE TABLE `transaction` (
+    `id` bigint(11) NOT NULL AUTO_INCREMENT,
+    `pid` bigint(11) NOT NULL COMMENT 'id for associated transactions',
+    `src_account_id` bigint(11) NOT NULL,
+    `dst_account_id` bigint(11) NOT NULL,
+    `src_user_id` varchar(255) NOT NULL,
+    `dst_user_id` varchar(255) NOT NULL,
+    `src_account_type` varchar(255) NOT NULL,
+    `dst_account_type` varchar(255) NOT NULL,
+    `src_currency` varchar(255) NOT NULL DEFAULT 'JPY' COMMENT 'could be POINT/USD..',
+    `dst_currency` varchar(255) NOT NULL DEFAULT 'JPY',
+    `src_amount` bigint(11) NOT NULL DEFAULT 0 COMMENT 'cents if it is money wise',
+    `dst_amount` bigint(11) NOT NULL DEFAULT 0,
+    `src_balance` bigint(11) NOT NULL DEFAULT 0 COMMENT 'up to date balance after this transaction',
+    `dst_balance` bigint(11) NOT NULL DEFAULT 0,
+    `metadata` text,
+    `version` int DEFAULT 1,
+    `created_at` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
+    PRIMARY KEY (`id`),
+    INDEX (pid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
