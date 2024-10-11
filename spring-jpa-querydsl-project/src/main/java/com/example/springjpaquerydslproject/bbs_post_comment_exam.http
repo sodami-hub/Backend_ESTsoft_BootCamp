@@ -1,0 +1,32 @@
+
+### get post list
+GET http://localhost:8080/post/list
+Content-Type: application/json
+
+### get post list
+GET http://localhost:8080/post/1
+Content-Type: application/json
+
+
+### save post
+POST http://localhost:8080/post
+Content-Type: application/json
+
+{
+  "categoryId" : 1,
+  "userId" : 1,
+  "title" : "44444",
+  "content" : "test 게시글의 본문 내용을 입력하시면 됩니다. \n test 게시글의 본문 내용을 입력하시면 됩니다."
+}
+
+### save comment
+POST http://localhost:8080/comment
+Content-Type: application/json
+{
+  "postId" : 4,
+  "content" : " hahaha"
+}
+
+### most comment
+GET http://localhost:8080/most/commented
+Content-Type: application/json
