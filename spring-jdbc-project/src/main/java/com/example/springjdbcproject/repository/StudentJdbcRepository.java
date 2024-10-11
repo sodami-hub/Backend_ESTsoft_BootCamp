@@ -31,7 +31,6 @@ public class StudentJdbcRepository implements StudentRepository{
     public int insertStudent(Map<String, Object> params) {
         String name = (String) params.get("name");
         int age = Integer.parseInt((String)(params.get("age")));
-        System.out.println(name + "dfdfdf"+age);
         return jdbcTemplate.update("insert into student(name,age,create_at) values(?,?,now())",name,age);
     }
 
