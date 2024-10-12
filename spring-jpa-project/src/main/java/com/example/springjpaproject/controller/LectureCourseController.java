@@ -1,9 +1,11 @@
 package com.example.springjpaproject.controller;
 
+import com.example.springjpaproject.entity.LectureCourse;
 import com.example.springjpaproject.service.LectureCourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,5 +22,10 @@ public class LectureCourseController {
     @PutMapping("/lecture/regist")
     public void registLecture(@RequestBody Map<String,Object> params) {
         lectureCourseService.registLecture(params);
+    }
+
+    @GetMapping("/lecture/list")
+    public List<LectureCourse> lectureCourseList() {
+        return lectureCourseService.findAll();
     }
 }

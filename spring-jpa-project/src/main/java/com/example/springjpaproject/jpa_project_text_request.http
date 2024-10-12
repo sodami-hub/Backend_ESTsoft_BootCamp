@@ -1,0 +1,72 @@
+###
+### student Table 관련
+
+### insert student
+PUT http://localhost:8080/student/regist
+Content-Type: application/json
+
+{
+  "name" : "jenifer",
+  "age" : 26,
+  "desc" : "my hobby is running"
+}
+
+### student list
+GET http://localhost:8080/student/list
+Content-Type: application/json
+
+### student find Name
+GET http://localhost:8080/student/4
+Content-Type: application/json
+
+### student update
+PUT http://localhost:8080/student/update
+Content-Type: application/json
+
+{
+  "id" : 5,
+  "desc" : "나는 미친놈 입니다."
+}
+
+### =======================================================
+### instructor Table 관련
+
+### insert instructor
+PUT localhost:8080/instructor/regist
+Content-Type: application/json
+
+{
+  "name" : "강데이터",
+  "desc" : "DBMS instructor"
+}
+
+### instructor list
+GET localhost:8080/instructor/list
+Content-Type: application/json
+
+### instructor find
+GET localhost:8080/instructor/findId/2
+Content-Type: application/json
+
+### ==============================================
+### lecture_course table 관련
+
+### find lectrue_course
+GET localhost:8080/lecture/course/1
+Content-Type: application/json
+
+### regist lecture_course
+PUT localhost:8080/lecture/regist
+Content-Type: application/json
+
+{
+  "title" : "Go Language",
+  "instructor_id" : 4,
+  "capacity" : 30,
+  "from" : "2024-12-01",
+  "to" : "2024-02-28"
+}
+
+### list lecture_course
+GET localhost:8080/lecture/list
+Content-Type: application/json

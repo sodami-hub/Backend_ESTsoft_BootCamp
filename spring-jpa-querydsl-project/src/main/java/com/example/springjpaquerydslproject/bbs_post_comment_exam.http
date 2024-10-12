@@ -22,9 +22,10 @@ Content-Type: application/json
 ### save comment
 POST http://localhost:8080/comment
 Content-Type: application/json
+
 {
   "postId" : 4,
-  "content" : " hahaha"
+  "content" : "hahaha"
 }
 
 ### most comment
